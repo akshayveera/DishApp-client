@@ -1,9 +1,9 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import DishCard from './DishCard';
 
 const App = () => {
 
-    const [flag, setFlag] = useState(false);
     const [info, setInfo] = useState(null);
 
     useEffect(()=>{
@@ -18,27 +18,22 @@ const App = () => {
         setInfo(json);
     }
 
-    const item = {
-        "dishName": "Jeera Rice",
-        "dishId": "1",
-        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/jeera-rice.jpg",
-        "isPublished": true
-        };
+    if(!info){
+        return (
+          <section className='flex flex-col items-center bg-gradient-to-tr from-red-100 to-blue-200 min-h-[100vh]'>
+              <h1 className='text-center text-4xl font-semibold py-5 my-10 w-[60%] rounded-lg text-purple-900 bg-purple-100'>DashBoard</h1>
+          </section>
+      );
+    }
+        
+
   return (
-    <section>
-        <h1 className='text-center text-4xl font-semibold'>DashBoard</h1>
+    <section className='flex flex-col items-center justify-center bg-gradient-to-tr from-red-100 to-blue-200'>
+        <h1 className='text-center text-4xl font-semibold py-5 my-10 w-[60%] rounded-lg text-purple-900 bg-purple-100'>DashBoard</h1>
 
-        <div>
+        <div className='flex flex-wrap items-center justify-evenly gap-y-10'>
             {info.map((item)=>(
-
-                <div key={item?.dishId} className='flex flex-col w-fit items-center gap-3 bg-purple-100 rounded-lg p-5 shadow-lg'>
-                    <img className='h-[200px] rounded-lg' src={item?.imageUrl} alt="" />
-
-                    <p className='text-xl font-semibold text-purple-900'>{item?.dishName}</p>
-
-                    <button className='w-[70px] h-[30px] bg-purple-900 rounded-full flex items-center justify-start'><div className='bg-white h-[27px] w-[27px] rounded-full'></div></button>
-                </div>
-
+                <DishCard key={item?.dishId} item={item}/>
             ))}
         </div>
     </section>
